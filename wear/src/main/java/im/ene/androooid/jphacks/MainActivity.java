@@ -23,8 +23,6 @@ public class MainActivity extends SensorMonitorActivity implements SensorEventLi
     private TextView mHeartRateTextView;
     private TextView mStepsTextView;
 
-    private ImageView mImageViewHeart;
-
     private SensorManager mSensorManager;
     private Sensor mHeartRateSensor;
 
@@ -44,10 +42,13 @@ public class MainActivity extends SensorMonitorActivity implements SensorEventLi
                 mStepsTextView = (TextView) stub.findViewById(R.id.tvSteps);
 
 
-                mImageViewHeart = (ImageView) stub.findViewById(R.id.imgHeart);
+                ImageView imageView = (ImageView) stub.findViewById(R.id.imgHeart);
+                Animation animation = AnimationUtils.loadAnimation(MainActivity.this, R.anim.heart_flash);
+                imageView.startAnimation(animation);
 
-                Animation heartFlashAnimation = AnimationUtils.loadAnimation(MainActivity.this, R.anim.heart_flash);
-                mImageViewHeart.startAnimation(heartFlashAnimation);
+                imageView = (ImageView) stub.findViewById(R.id.imgSteps);
+                animation.setStartOffset(300);
+                imageView.startAnimation(animation);
             }
         });
 
