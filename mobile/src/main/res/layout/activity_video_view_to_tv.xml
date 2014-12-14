@@ -60,14 +60,28 @@
                 android:textColor="#ff0000" />
         </LinearLayout>
 
-        <im.ene.androooid.jphacks.widgets.SquareGifImageByWidth
-            android:id="@+id/image_avatar"
-            android:layout_width="250dp"
-            android:layout_height="250dp"
-            android:layout_alignParentTop="true"
-            android:layout_gravity="center_horizontal"
-            android:scaleType="fitCenter"
-            android:src="@drawable/androidify_fat_exercise" />
+        <FrameLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal">
+            <im.ene.androooid.jphacks.widgets.SquareGifImageByWidth
+                android:id="@+id/image_avatar"
+                android:layout_width="500dp"
+                android:layout_height="500dp"
+                android:layout_alignParentTop="true"
+                android:scaleType="fitCenter"
+                android:src="@drawable/androidify_fat_exercise"
+                />
+
+            <TextView
+                android:text="Exercising"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="25sp"
+                android:paddingBottom="20dp"
+                android:layout_gravity="center_horizontal|bottom"
+                />
+        </FrameLayout>
     </LinearLayout>
 
 

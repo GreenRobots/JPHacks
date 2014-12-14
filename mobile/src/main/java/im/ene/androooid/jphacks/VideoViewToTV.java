@@ -70,6 +70,8 @@ public class VideoViewToTV extends ActionBarActivity implements WearSensorCallba
 
     private TextView mHeartBeat;
 
+    private static int once = 0;
+
     @Override
     protected void onCreate( Bundle savedInstanceState ) {
         super.onCreate( savedInstanceState );
@@ -357,40 +359,43 @@ public class VideoViewToTV extends ActionBarActivity implements WearSensorCallba
         mHeartBeat.setText(Float.toString(heartRate));
         if (heartRate > 100) //TODO: change this number to be more suitable
         {
+            if(once == 0) {
+                once++;
 
-            final Dialog dialog = new Dialog(this);
-            dialog.setTitle("We Noticed You have Heartrate > 100...");
-            dialog.setContentView(R.layout.load_new_video_dialog);
+                final Dialog dialog = new Dialog(this);
+                dialog.setTitle("We Noticed You have Heartrate > 100...");
+                dialog.setContentView(R.layout.load_new_video_dialog);
 
-            TextView textView = (TextView) dialog.findViewById(R.id.show_easy_or_hard_video_textView);
-            textView.setText("Want to show easier video?");
+                TextView textView = (TextView) dialog.findViewById(R.id.show_easy_or_hard_video_textView);
+                textView.setText("Want to show easier video?");
 
-            Button confirmButton = (Button) dialog.findViewById(R.id.confirm);
-            confirmButton.setOnClickListener(new View.OnClickListener()
-            {
-                @Override
-                public void onClick(View v)
+                Button confirmButton = (Button) dialog.findViewById(R.id.confirm);
+                confirmButton.setOnClickListener(new View.OnClickListener()
                 {
-                    // use easyvideo
-                    videoToLoad = easyVideo;
-                    dialog.dismiss();
-                    recreate();
-                }
-            });
-            Button declineButton = (Button) dialog.findViewById(R.id.decline);
-            declineButton.setOnClickListener(new View.OnClickListener()
-            {
-                @Override
-                public void onClick(View v)
+                    @Override
+                    public void onClick(View v)
+                    {
+                        // use easyvideo
+                        videoToLoad = easyVideo;
+                        dialog.dismiss();
+                        recreate();
+                    }
+                });
+                Button declineButton = (Button) dialog.findViewById(R.id.decline);
+                declineButton.setOnClickListener(new View.OnClickListener()
                 {
-                    dialog.dismiss();
-                }
-            });
-            dialog.show();
+                    @Override
+                    public void onClick(View v)
+                    {
+                        dialog.dismiss();
+                    }
+                });
+                dialog.show();
+            }
         }
-        else if (heartRate < 80) //TODO: change this number to be more suitable
+        else if (heartRate < 80 && once == 0) //TODO: change this number to be more suitable
         {
-
+            once++;
             final Dialog dialog = new Dialog(this);
             dialog.setTitle("We Noticed You have Heartrate < 80...");
             dialog.setContentView(R.layout.load_new_video_dialog);
