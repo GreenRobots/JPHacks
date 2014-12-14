@@ -3,11 +3,96 @@
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/imgHeart"
-        android:layout_gravity="center_horizontal"
-        android:src="@drawable/heart_icon" />
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="9:41"
+            android:textSize="17sp"
+            android:id="@+id/textView2"
+            android:layout_gravity="center_horizontal|top" />
+    </FrameLayout>
+
+
+<!-- for heart rate -->
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="5"
+        android:paddingBottom="5dp">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:scaleType="fitStart"
+            android:id="@+id/imgHeart"
+            android:layout_gravity="center_horizontal"
+            android:src="@drawable/heart_icon"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentStart="true" />
+
+
+
+        <TextView android:id="@+id/tvHeartRate" android:layout_width="wrap_content"
+            android:text="-"
+            android:textSize="35sp"
+            android:layout_height="wrap_content"
+            android:paddingLeft="5dp"
+            android:layout_centerVertical="true"
+            android:layout_alignParentEnd="true"
+            android:layout_toEndOf="@+id/imgHeart" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="15sp"
+            android:text="BPM"
+            android:paddingRight="5dp"
+            android:id="@+id/textView"
+            android:layout_alignBottom="@+id/imgHeart"
+            android:layout_alignEnd="@+id/tvHeartRate" />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="5">
+        <ImageView
+            android:visibility="invisible"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:scaleType="fitStart"
+            android:id="@+id/imgSteps"
+            android:layout_gravity="center_horizontal"
+            android:src="@drawable/heart_icon"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentStart="true" />
+
+
+
+        <TextView android:id="@+id/tvSteps" android:layout_width="wrap_content"
+            android:text="-"
+            android:textSize="35sp"
+            android:layout_height="wrap_content"
+            android:paddingLeft="5dp"
+            android:layout_centerVertical="true"
+            android:layout_alignParentEnd="true"
+            android:layout_toEndOf="@+id/imgSteps" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="15sp"
+            android:text="steps"
+            android:paddingRight="5dp"
+            android:id="@+id/textView1"
+            android:layout_alignBottom="@+id/imgSteps"
+            android:layout_alignEnd="@+id/tvSteps" />
+    </RelativeLayout>
+
 
 </LinearLayout>
