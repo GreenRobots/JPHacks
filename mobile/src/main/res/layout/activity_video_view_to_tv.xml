@@ -59,14 +59,15 @@
                 android:textAppearance="@style/TextAppearance.AppCompat.Title"
                 android:textColor="#ff0000" />
         </LinearLayout>
+
         <im.ene.androooid.jphacks.widgets.SquareGifImageByWidth
             android:id="@+id/image_avatar"
             android:layout_width="250dp"
             android:layout_height="250dp"
             android:layout_alignParentTop="true"
+            android:layout_gravity="center_horizontal"
             android:scaleType="fitCenter"
-            android:src="@drawable/androidify_fat_exercise"
-            android:layout_gravity="center_horizontal"/>
+            android:src="@drawable/androidify_fat_exercise" />
     </LinearLayout>
 
 

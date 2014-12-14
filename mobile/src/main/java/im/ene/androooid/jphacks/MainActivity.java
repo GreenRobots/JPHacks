@@ -182,13 +182,14 @@ public class MainActivity extends ActionBarActivity implements LocationListener,
         createGeofences();
 
         // chart
+        // chart
         mChart = (BarChart) findViewById(R.id.chart_steps_count_week);
         mChart.setOnChartValueSelectedListener(this);
 
         // enable the drawing of values
         mChart.setDrawYValues(true);
         mChart.setDrawValueAboveBar(true);
-        mChart.setDescription("YOUR STEPS COUNT");
+//        mChart.setDescription("YOUR STEPS COUNT");
         // if more than 60 entries are displayed in the chart, no values will be
         // drawn
         mChart.setMaxVisibleValueCount(60);
@@ -512,7 +513,7 @@ public class MainActivity extends ActionBarActivity implements LocationListener,
             }
         }
 
-        BarDataSet set1 = new BarDataSet(yVals1, "");
+        BarDataSet set1 = new BarDataSet(yVals1, "YOUR STEPS COUNT");
         set1.setBarSpacePercent(35f);
 
         ArrayList<BarDataSet> dataSets = new ArrayList<BarDataSet>();
