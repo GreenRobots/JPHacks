@@ -39,12 +39,12 @@ import im.ene.androooid.jphacks.utils.WearSensorUtil;
 
 public class VideoViewToTV extends ActionBarActivity implements WearSensorCallback
 {
-    private static String videoToLoad;
     private static final String[] hardVideos =
             {"http://www.googledrive.com/host/0B5oyJCoT20suTzhqdkY4V29Hczg/bootyshaking.mp4",
-             "http://www.googledrive.com/host/0B5oyJCoT20suTzhqdkY4V29Hczg/victoriasecret.mp4",
-             "http://www.googledrive.com/host/0B5oyJCoT20suTzhqdkY4V29Hczg/video1.mp4"};
+                    "http://www.googledrive.com/host/0B5oyJCoT20suTzhqdkY4V29Hczg/victoriasecret.mp4",
+                    "http://www.googledrive.com/host/0B5oyJCoT20suTzhqdkY4V29Hczg/video1.mp4"};
     private static final String easyVideo = "http://www.googledrive.com/host/0B5oyJCoT20suTzhqdkY4V29Hczg/bootyshaking.mp4";
+    private static String videoToLoad;
     Random r;
     final int Low = 0;
     final int High = 2;
