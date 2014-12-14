@@ -200,6 +200,7 @@ public class VideoViewToTV extends ActionBarActivity implements WearSensorCallba
 
     @Override
     protected void onPause() {
+        mWearSensorUtil.pause();
         mWearSensorUtil.removeCallback();
         if ( isFinishing() ) {
             // End media router discovery
@@ -340,7 +341,6 @@ public class VideoViewToTV extends ActionBarActivity implements WearSensorCallba
 
     @Override
     protected void onStop() {
-        mWearSensorUtil.stop();
         super.onStop();
     }
 
@@ -354,7 +354,7 @@ public class VideoViewToTV extends ActionBarActivity implements WearSensorCallba
     @Override
     public void onHeartRateChanged(float heartRate) {
         Log.d("", "heart rate:" + heartRate);
-        tv_heartRate.setText(Float.toString(heartRate));
+        mHeartBeat.setText(Float.toString(heartRate));
         if (heartRate > 100) //TODO: change this number to be more suitable
         {
 

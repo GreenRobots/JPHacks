@@ -261,6 +261,7 @@ public class MainActivity extends ActionBarActivity implements LocationListener,
     protected void onPause() {
         // Remove the callback to stop device discovery
 //        mMediaRouter.removeCallback(mMediaRouterCallback);
+        mWearSensorUtil.pause();
         mWearSensorUtil.removeCallback();
         startService(mChatHeadIntent);
         super.onPause();
@@ -345,8 +346,6 @@ public class MainActivity extends ActionBarActivity implements LocationListener,
         if (null != mGeofenceRequestIntent) {
             LocationServices.GeofencingApi.removeGeofences(mGoogleApiClient, mGeofenceRequestIntent);
         }
-
-        mWearSensorUtil.stop();
     }
 
     @Override

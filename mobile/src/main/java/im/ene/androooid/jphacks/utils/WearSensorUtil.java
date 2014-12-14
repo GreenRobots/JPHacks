@@ -50,8 +50,8 @@ public class WearSensorUtil implements MessageApi.MessageListener, GoogleApiClie
         }
     }
 
-    public void stop() {
-        Log.d(TAG, "stop");
+    public void pause() {
+        Log.d(TAG, "pause");
 
         if ( mWearApiClient != null ) {
             Wearable.MessageApi.removeListener( mWearApiClient, this );
@@ -77,15 +77,19 @@ public class WearSensorUtil implements MessageApi.MessageListener, GoogleApiClie
         Log.d(TAG, "onMessageReceived");
 
         String message = new String(messageEvent.getData());
+        if(message==null) return;
 
         String arr[] = message.split(":");
+        if (arr.length<2) return;
+
         String type = arr[0];
         if (SENSOR_TYPE_HEART_RATE.equals(type)) {
             final float heartRate = Float.parseFloat(arr[1]);
             mHandler.post(new Runnable() {
                 @Override
                 public void run() {
-                    mCallback.onHeartRateChanged(heartRate);
+                    if(mCallback!=null)
+                        mCallback.onHeartRateChanged(heartRate);
                 }
             });
         } else if(SENSOR_TYPE_STEPS.equals(type)) {
@@ -93,7 +97,8 @@ public class WearSensorUtil implements MessageApi.MessageListener, GoogleApiClie
             mHandler.post(new Runnable() {
                 @Override
                 public void run() {
-                    mCallback.onStepDetected(steps);
+                    if(mCallback!=null)
+                        mCallback.onStepDetected(steps);
                 }
             });
         }
