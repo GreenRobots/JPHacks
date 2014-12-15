@@ -33,7 +33,7 @@ We use Google APIs and NTTDocomo AITalk Api for this awesome Application.
 
 **Who we are**
 
-Androooid Team of JPHacks 2014. We are Takahiko (git@TETRA2000), Cherry (git@phantomkirby) and Nam Nguyen Hoai (git@eneim), students from 3 different countries who share the obssesion in Android Application. *We don't create World-class App. We create app that make YOU happy.*
+Androooid Team of [JPHacks 2014](https://jphacks.com). We are Takahiko [(git)](https://github.com/TETRA2000), Cherry [(git)](https://github.com/phantomkirby) and Nam Nguyen Hoai [git](https://github.com/eneim), students from 3 different countries who first meet in Tokyo, share the obssesion in Android Application and join JPHacks 2014 together. *We don't create World-class App. We create app that make YOU happy.*
 
 **LICENSE**
 
