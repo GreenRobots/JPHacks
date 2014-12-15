@@ -15,12 +15,9 @@ import com.google.android.gms.wearable.Wearable;
 /**
  * Created by Takahiko on 2014/12/13.
  */
-public abstract class WearMessageActivity extends Activity implements MessageApi.MessageListener, GoogleApiClient.ConnectionCallbacks {
+public abstract class WearMessageActivity extends Activity implements GoogleApiClient.ConnectionCallbacks {
     private static final String WEAR_MESSAGE_PATH = "/message";
     private GoogleApiClient mApiClient;
-    private ArrayAdapter<String> mAdapter;
-
-    private ListView mListView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,28 +49,14 @@ public abstract class WearMessageActivity extends Activity implements MessageApi
         super.onStart();
     }
 
-    @Override
-    public void onMessageReceived( final MessageEvent messageEvent ) {
-        runOnUiThread( new Runnable() {
-            @Override
-            public void run() {
-                if( messageEvent.getPath().equalsIgnoreCase( WEAR_MESSAGE_PATH ) ) {
-                    mAdapter.add(new String(messageEvent.getData()));
-                    mAdapter.notifyDataSetChanged();
-                }
-            }
-        });
-    }
 
     @Override
     public void onConnected(Bundle bundle) {
-        Wearable.MessageApi.addListener( mApiClient, this );
     }
 
     @Override
     protected void onStop() {
         if ( mApiClient != null ) {
-            Wearable.MessageApi.removeListener( mApiClient, this );
             if ( mApiClient.isConnected() ) {
                 mApiClient.disconnect();
             }

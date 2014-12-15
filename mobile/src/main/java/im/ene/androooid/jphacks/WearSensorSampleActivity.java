@@ -31,6 +31,7 @@ public class WearSensorSampleActivity extends Activity implements WearSensorCall
 
     @Override
     protected void onPause() {
+        mWearSensorUtil.pause();
         mWearSensorUtil.removeCallback();
 
         super.onPause();
@@ -38,7 +39,6 @@ public class WearSensorSampleActivity extends Activity implements WearSensorCall
 
     @Override
     protected void onStop() {
-        mWearSensorUtil.stop();
 
         super.onStop();
     }

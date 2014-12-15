@@ -20,8 +20,8 @@ public class MainActivity extends SensorMonitorActivity implements SensorEventLi
     public static final String SENSOR_TYPE_HEART_RATE = "heartRate";
     public static final String SENSOR_TYPE_STEPS = "steps";
 
-    private TextView mTextView;
-    private ImageView mImageViewHeart;
+    private TextView mHeartRateTextView;
+    private TextView mStepsTextView;
 
     private SensorManager mSensorManager;
     private Sensor mHeartRateSensor;
@@ -38,11 +38,17 @@ public class MainActivity extends SensorMonitorActivity implements SensorEventLi
         stub.setOnLayoutInflatedListener(new WatchViewStub.OnLayoutInflatedListener() {
             @Override
             public void onLayoutInflated(WatchViewStub stub) {
-                mTextView = (TextView) stub.findViewById(R.id.text);
-                mImageViewHeart = (ImageView) stub.findViewById(R.id.imgHeart);
+                mHeartRateTextView = (TextView) stub.findViewById(R.id.tvHeartRate);
+                mStepsTextView = (TextView) stub.findViewById(R.id.tvSteps);
 
-                Animation heartFlashAnimation = AnimationUtils.loadAnimation(MainActivity.this, R.anim.heart_flash);
-                mImageViewHeart.startAnimation(heartFlashAnimation);
+
+                ImageView imageView = (ImageView) stub.findViewById(R.id.imgHeart);
+                Animation animation = AnimationUtils.loadAnimation(MainActivity.this, R.anim.heart_flash);
+                imageView.startAnimation(animation);
+
+                imageView = (ImageView) stub.findViewById(R.id.imgSteps);
+                animation.setStartOffset(300);
+                imageView.startAnimation(animation);
             }
         });
 
@@ -65,12 +71,9 @@ public class MainActivity extends SensorMonitorActivity implements SensorEventLi
         sendSensorToMobile(SENSOR_TYPE_HEART_RATE, heartRate);
 
         // display value
-        StringBuilder builder = new StringBuilder();
-        builder.append("heart rate:");
-        builder.append(heartRate);
-        mTextView.setText(builder.toString());
+        mHeartRateTextView.setText(""+heartRate);
 
-        Log.d(TAG, builder.toString());
+        Log.d(TAG, "heartRate:"+heartRate);
     }
 
     @Override
@@ -79,12 +82,9 @@ public class MainActivity extends SensorMonitorActivity implements SensorEventLi
         sendSensorToMobile(SENSOR_TYPE_STEPS, sumOfSteps);
 
         // display value
-        StringBuilder builder = new StringBuilder();
-        builder.append("walked:");
-        builder.append(sumOfSteps);
-        mTextView.setText(builder.toString());
+        mStepsTextView.setText(""+sumOfSteps);
 
-        Log.d(TAG, builder.toString());
+        Log.d(TAG, "steps:"+sumOfSteps);
     }
 
     private void sendSensorToMobile(String sensorName, String value) {

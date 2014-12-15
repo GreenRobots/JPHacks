@@ -68,4 +68,14 @@
         </LinearLayout>
     </LinearLayout>
 
+    <TextView
+        android:id="@+id/androidEmotion"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="#000000"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Sad. Need Exercise."
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true"/>
+
 </RelativeLayout>
