@@ -21,7 +21,7 @@ You go out of home location, the app starts tracking your steps throughout the d
 
 **3. The INNOVATION inside**
 
-If you have ever heard about the term "Internet of things", where everything around you is connected. Our application was based on that Idea.
+If you have ever heard about the term **"Internet of things"**, where everything around you is connected, then our application was based on that Idea.
 
 **4. Conclusion, and the future of fitness Application**
 
@@ -34,3 +34,7 @@ We use Google APIs and NTTDocomo AITalk Api for this awesome Application.
 **Who we are**
 
 Androooid Team of JPHacks 2014. We are Takahiko (git@TETRA2000), Cherry (git@phantomkirby) and Nam Nguyen Hoai (git@eneim), students from 3 different countries who share the obssesion in Android Application. *We don't create World-class App. We create app that make YOU happy.*
+
+**LICENSE**
+
+// still empty. license information related to the libraries and APIs we used will be here soon
