@@ -13,6 +13,8 @@ There are lots of fitness apps... but do you always have motivation to use them?
 
 **1. Why this app?**
 
+wait a bit ...
+
 **2. How it work?**
 
 You go out of home location, the app starts tracking your steps throughout the day, and when you come back home, it will match your steps with your goald and encourage you to reach that, or congratulate you otherwise. It will play training video on your smartphone/tablet as well as on Android TV if you want, to help you.
@@ -22,6 +24,8 @@ You go out of home location, the app starts tracking your steps throughout the d
 If you have ever heard about the term "Internet of things", where everything around you is connected. Our application was based on that Idea.
 
 **4. Conclusion, and the future of fitness Application**
+
+wait a bit more
 
 **5. APIs**
 
