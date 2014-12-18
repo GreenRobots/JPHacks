@@ -3,6 +3,7 @@ package im.ene.androooid.jphacks.watchface;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Movie;
+import android.graphics.Paint;
 import android.graphics.Rect;
 import android.os.Bundle;
 import android.os.Handler;
@@ -34,7 +35,31 @@ public class DigitalWatchFaceService extends CanvasWatchFaceService {
     /* implement service callback methods */
     private class Engine extends CanvasWatchFaceService.Engine {
 
-        private Movie mAvaterImage;
+        private Movie mAvatarImage;
+
+        private int mBackgroundColor;
+        private int mPrimaryColor;
+
+        private Paint mPaintPrimary;
+        private Paint mPaintRevert;
+
+        private Paint mPaintTextPrimary;
+        private Paint mPaintTextRevert;
+
+        // TODO set from dimen
+        private float mClockTextSizeLarge = 80;
+        private float mClockTextSizeSmall = 40;
+
+        // TODO set from dimen
+        private float mClockOffsetX = 50;
+        private float mClockOffsetY = 300;
+
+        private float mClockOffsetSmallX = 260;
+        private float mClockOffsetSmallY = 300;
+
+        // TODO set from dimen
+        private float mClockRectWidth = 200;
+        private float mClockRectHeight = 60;
 
         /** Alpha value for drawing time when in mute mode. */
         static final int MUTE_ALPHA = 100;
@@ -75,8 +100,19 @@ public class DigitalWatchFaceService extends CanvasWatchFaceService {
             }
             super.onCreate(holder);
 
+            mBackgroundColor = Color.parseColor("#4db6ac");
+            mPrimaryColor = Color.WHITE;
 
-            mAvaterImage = getResources().getMovie(R.raw.androidify_normal_eat);
+            mPaintPrimary = new Paint();
+            mPaintPrimary.setColor(mPrimaryColor);
+            mPaintTextPrimary = new Paint(mPaintPrimary);
+            mPaintTextPrimary.setTextSize(mClockTextSizeSmall);
+            mPaintRevert = new Paint();
+            mPaintRevert.setColor(mBackgroundColor);
+            mPaintTextRevert = new Paint(mPaintRevert);
+            mPaintTextRevert.setTextSize(mClockTextSizeLarge);
+
+            mAvatarImage = getResources().getMovie(R.raw.androidify_normal_eat);
         }
 
         @Override
@@ -111,13 +147,26 @@ public class DigitalWatchFaceService extends CanvasWatchFaceService {
 
         @Override
         public void onDraw(Canvas canvas, Rect bounds) {
-            canvas.drawColor(isInAmbientMode() ? Color.BLACK: Color.WHITE);
+            canvas.drawColor(isInAmbientMode() ? Color.BLACK: mBackgroundColor);
 
             // Draw Gif Animation
             if(!isInAmbientMode()) {
-                int posInMilliSec = ((int)System.currentTimeMillis()) % mAvaterImage.duration();
-                mAvaterImage.setTime(posInMilliSec);
-                mAvaterImage.draw(canvas, 0, 0);
+                int posInMilliSec = ((int)System.currentTimeMillis()) % mAvatarImage.duration();
+                mAvatarImage.setTime(posInMilliSec);
+                mAvatarImage.draw(canvas, 0, 0);
+            }
+
+            // Draw hour and minute
+            canvas.drawRect(mClockOffsetX,
+                    mClockOffsetY - mClockRectHeight,
+                    mClockOffsetX + mClockRectWidth,
+                    mClockOffsetY + mClockRectHeight,
+                    mPaintPrimary);
+            canvas.drawText("12:34", mClockOffsetX, mClockOffsetY, mPaintTextRevert);
+
+            // Draw seconds
+            if(!isInAmbientMode()) {
+                canvas.drawText("56", mClockOffsetSmallX, mClockOffsetSmallY, mPaintTextPrimary);
             }
         }
 
