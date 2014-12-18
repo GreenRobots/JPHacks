@@ -12,6 +12,8 @@ import android.support.wearable.watchface.CanvasWatchFaceService;
 import android.util.Log;
 import android.view.SurfaceHolder;
 
+import java.util.Date;
+
 import im.ene.androooid.jphacks.R;
 
 /**
@@ -60,6 +62,8 @@ public class DigitalWatchFaceService extends CanvasWatchFaceService {
         // TODO set from dimen
         private float mClockRectWidth = 200;
         private float mClockRectHeight = 60;
+
+        private Date mDate;
 
         /** Alpha value for drawing time when in mute mode. */
         static final int MUTE_ALPHA = 100;
@@ -113,6 +117,8 @@ public class DigitalWatchFaceService extends CanvasWatchFaceService {
             mPaintTextRevert.setTextSize(mClockTextSizeLarge);
 
             mAvatarImage = getResources().getMovie(R.raw.androidify_normal_eat);
+
+            mDate = new Date();
         }
 
         @Override
@@ -156,17 +162,31 @@ public class DigitalWatchFaceService extends CanvasWatchFaceService {
                 mAvatarImage.draw(canvas, 0, 0);
             }
 
-            // Draw hour and minute
-            canvas.drawRect(mClockOffsetX,
-                    mClockOffsetY - mClockRectHeight,
-                    mClockOffsetX + mClockRectWidth,
-                    mClockOffsetY + mClockRectHeight,
-                    mPaintPrimary);
-            canvas.drawText("12:34", mClockOffsetX, mClockOffsetY, mPaintTextRevert);
+            mDate.setTime(System.currentTimeMillis());
+
+            if(!isInAmbientMode()) {
+                // Draw hour and minute
+                canvas.drawRect(mClockOffsetX,
+                        mClockOffsetY - mClockRectHeight,
+                        mClockOffsetX + mClockRectWidth,
+                        mClockOffsetY + mClockRectHeight,
+                        mPaintPrimary);
+            }
+
+            // i know it's deprecated. fix someday,,.
+            int hours = mDate.getHours();
+            int minutes = mDate.getMinutes();
+            String timeStr = (hours<10 ? " " : "") + hours
+                    + ":"
+                    + (minutes<10 ? "0" : "") + minutes;
+            canvas.drawText(timeStr, mClockOffsetX, mClockOffsetY, mPaintTextRevert);
 
             // Draw seconds
             if(!isInAmbientMode()) {
-                canvas.drawText("56", mClockOffsetSmallX, mClockOffsetSmallY, mPaintTextPrimary);
+                int seconds = mDate.getSeconds();
+                canvas.drawText((seconds<10? "0":"") + seconds,
+                        mClockOffsetSmallX,
+                        mClockOffsetSmallY, mPaintTextPrimary);
             }
         }
 
