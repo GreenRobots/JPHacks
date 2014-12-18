@@ -4,7 +4,11 @@
 
     <uses-feature android:name="android.hardware.type.watch" />
 
+    <!-- to read heart rate-->
     <uses-permission android:name="android.permission.BODY_SENSORS" />
+    <!-- for watch face -->
+    <uses-permission android:name="com.google.android.permission.PROVIDE_BACKGROUND" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
 
     <application
         android:allowBackup="true"
@@ -20,6 +24,28 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <service
+            android:name=".watchface.DigitalWatchFaceService"
+            android:label="@string/digital_name"
+            android:allowEmbedded="true"
+            android:taskAffinity=""
+            android:permission="android.permission.BIND_WALLPAPER" >
+            <meta-data
+                android:name="android.service.wallpaper"
+                android:resource="@xml/watch_face" />
+            <meta-data
+                android:name="com.google.android.wearable.watchface.preview"
+                android:resource="@drawable/preview_digital" />
+            <meta-data
+                android:name="com.google.android.wearable.watchface.preview_circular"
+                android:resource="@drawable/preview_digital_circular" />
+            <intent-filter>
+                <action android:name="android.service.wallpaper.WallpaperService" />
+                <category
+                    android:name=
+                        "com.google.android.wearable.watchface.category.WATCH_FACE" />
+            </intent-filter>
+        </service>
     </application>
 
 </manifest>
