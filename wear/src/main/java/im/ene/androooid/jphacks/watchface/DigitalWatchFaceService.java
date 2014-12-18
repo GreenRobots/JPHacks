@@ -76,6 +76,7 @@ public class DigitalWatchFaceService extends CanvasWatchFaceService {
         /** How often {@link #mUpdateTimeHandler} ticks in milliseconds. */
         long mInteractiveUpdateRateMs = NORMAL_UPDATE_RATE_MS;
 
+        // FIXME not updated in ambient mode
         /** Handler to update the time periodically in interactive mode. */
         final Handler mUpdateTimeHandler = new Handler() {
             @Override
@@ -174,6 +175,7 @@ public class DigitalWatchFaceService extends CanvasWatchFaceService {
             }
 
             // i know it's deprecated. fix someday,,.
+            // XXX add text format method
             int hours = mDate.getHours();
             int minutes = mDate.getMinutes();
             String timeStr = (hours<10 ? " " : "") + hours
