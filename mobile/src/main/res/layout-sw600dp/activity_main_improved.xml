@@ -62,7 +62,8 @@
                     android:layout_height="match_parent"
                     android:background="@drawable/background_circle">
 
-                    <TextView
+                    <im.ene.androooid.timelytextview.TimelyView
+                        android:id="@+id/text_stepcount"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:gravity="center"
