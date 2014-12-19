@@ -2,4 +2,7 @@
 <resources>
 
     <color name="jp_white">#ffffff</color>
+    <color name="jp_primaryColor">#009688</color>
+    <color name="jp_primaryColorDark">#4db6ac</color>
+    <color name="jp_background">#4db6ac</color>
 </resources>
