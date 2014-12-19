@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">JPHacks</string>
+    <string name="app_name">Android x Health</string>
+    <string name="digital_name">Android x Health (Digital)</string>
     <string name="hello_round">Hello Round World!</string>
     <string name="hello_square">Hello Square World!</string>
 
