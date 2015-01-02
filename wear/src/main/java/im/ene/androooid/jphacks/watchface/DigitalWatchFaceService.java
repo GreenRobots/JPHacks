@@ -26,7 +26,11 @@ public class DigitalWatchFaceService extends CanvasWatchFaceService {
      * Update rate in milliseconds for normal (not ambient and not mute) mode. We update twice
      * a second to blink the colons.
      */
-    private static final long NORMAL_UPDATE_RATE_MS = 100;
+    private static final long NORMAL_UPDATE_RATE_MS = 1000;
+    /**
+     * for GIF animation
+     */
+    private static final long ANIMATION_UPDATE_RATE_MS = 100;
 
     @Override
     public Engine onCreateEngine() {
@@ -73,10 +77,6 @@ public class DigitalWatchFaceService extends CanvasWatchFaceService {
 
         static final int MSG_UPDATE_TIME = 0;
 
-        /** How often {@link #mUpdateTimeHandler} ticks in milliseconds. */
-        long mInteractiveUpdateRateMs = NORMAL_UPDATE_RATE_MS;
-
-        // FIXME not updated in ambient mode
         /** Handler to update the time periodically in interactive mode. */
         final Handler mUpdateTimeHandler = new Handler() {
             @Override
@@ -89,6 +89,7 @@ public class DigitalWatchFaceService extends CanvasWatchFaceService {
                         invalidate();
                         if (shouldTimerBeRunning()) {
                             long timeMs = System.currentTimeMillis();
+                            long mInteractiveUpdateRateMs = isInAmbientMode() ? NORMAL_UPDATE_RATE_MS : ANIMATION_UPDATE_RATE_MS;
                             long delayMs =
                                     mInteractiveUpdateRateMs - (timeMs % mInteractiveUpdateRateMs);
                             mUpdateTimeHandler.sendEmptyMessageDelayed(MSG_UPDATE_TIME, delayMs);
@@ -210,7 +211,7 @@ public class DigitalWatchFaceService extends CanvasWatchFaceService {
          * only run when we're visible and in interactive mode.
          */
         private boolean shouldTimerBeRunning() {
-            return isVisible() && !isInAmbientMode();
+            return isVisible();
         }
 
         /**
