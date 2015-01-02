@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentSender;
+import android.graphics.Color;
 import android.graphics.Typeface;
 import android.location.Location;
 import android.os.Build;
@@ -16,6 +17,9 @@ import android.support.v7.media.MediaRouter;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.github.mikephil.charting.charts.BarChart;
@@ -50,6 +54,7 @@ import com.nineoldandroids.animation.ObjectAnimator;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -128,13 +133,18 @@ public class MainActivity extends ActionBarActivity implements LocationListener,
     private int mCounter = 0;
     private Intent mChatHeadIntent;
 
+    private TextView mHeartCount;
+
+    private ImageView mImageViewHeart, mImageViewStep;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-
+//        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_main_improved);
         AuthApiKey.initializeAuth(StringUtils.DOCOMO_API_KEY);
 
+        getSupportActionBar().setElevation(1);
         // Rather than displayng this activity, simply display a toast indicating that the geofence
         // service is being created. This should happen in less than a second.
         if (!isGooglePlayServicesAvailable()) {
@@ -143,6 +153,14 @@ public class MainActivity extends ActionBarActivity implements LocationListener,
             return;
         }
 
+        mHeartCount = (TextView) findViewById(R.id.text_heart_count);
+
+        mImageViewHeart = (ImageView) findViewById(R.id.image_heart_anim);
+        mImageViewStep = (ImageView) findViewById(R.id.image_step_anim);
+
+        Animation heartFlashAnimation = AnimationUtils.loadAnimation(this, R.anim.heart_flash);
+        mImageViewHeart.startAnimation(heartFlashAnimation);
+        mImageViewStep.startAnimation(heartFlashAnimation);
 
         // TODO: call chathead later
         mChatHeadIntent = new Intent(this, ChatHeadService.class);
@@ -186,10 +204,14 @@ public class MainActivity extends ActionBarActivity implements LocationListener,
         mChart = (BarChart) findViewById(R.id.chart_steps_count_week);
         mChart.setOnChartValueSelectedListener(this);
 
+        mChart.setBackgroundColor(Color.WHITE);
+
         // enable the drawing of values
         mChart.setDrawYValues(true);
+
+        mChart.setDrawBarShadow(false);
         mChart.setDrawValueAboveBar(true);
-//        mChart.setDescription("YOUR STEPS COUNT");
+        mChart.setDescription("");
         // if more than 60 entries are displayed in the chart, no values will be
         // drawn
         mChart.setMaxVisibleValueCount(60);
@@ -203,9 +225,10 @@ public class MainActivity extends ActionBarActivity implements LocationListener,
         mChart.setDrawGridBackground(false);
         mChart.setDrawHorizontalGrid(true);
         mChart.setDrawVerticalGrid(false);
+
         // mChart.setDrawYLabels(false);
         // sets the text size of the values inside the chart
-        mChart.setValueTextSize(10f);
+        mChart.setValueTextSize(12f);
         mChart.setDrawBorder(false);
         // mChart.setBorderPositions(new BorderPosition[] {BorderPosition.LEFT,
         // BorderPosition.RIGHT});
@@ -238,7 +261,7 @@ public class MainActivity extends ActionBarActivity implements LocationListener,
 
         // FIXME (eneim): the app will automatically call necessary stuff by Callbacks
 //        trackUserComingHome();
-        mTextStep.setText("Connecting...");
+        mTextStep.setText("...");
 
         //TODO: CALL THIS METHOD WHEN USER COMES BACK HOME
         //trackUserComingHome();
@@ -456,7 +479,7 @@ public class MainActivity extends ActionBarActivity implements LocationListener,
         }
 
         ArrayList<String> xVals = new ArrayList<String>();
-        SimpleDateFormat dateFormatForDays = new SimpleDateFormat("MM-dd");
+        SimpleDateFormat dateFormatForDays = new SimpleDateFormat("MM/dd");
 
         for (int i = 0; i < 7; i++) {
             Calendar cal = Calendar.getInstance();
@@ -512,8 +535,13 @@ public class MainActivity extends ActionBarActivity implements LocationListener,
             }
         }
 
+        Collections.reverse(xVals);
+        Collections.reverse(yVals1);
+
         BarDataSet set1 = new BarDataSet(yVals1, "YOUR STEPS COUNT");
         set1.setBarSpacePercent(35f);
+        set1.setColor(0xFFFB8C00);
+        set1.setHighLightColor(0xFF6D4C41);
 
         ArrayList<BarDataSet> dataSets = new ArrayList<BarDataSet>();
         dataSets.add(set1);
@@ -553,6 +581,7 @@ public class MainActivity extends ActionBarActivity implements LocationListener,
                             //TODO: crashes no matter what
                             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
                                 Intent intent = new Intent("im.ene.androooid.jphacks.VideoPlayerActivity");
+//                                Intent intent = new Intent(MainActivity.this, VideoPlayerActivity.class);
                                 getPackageManager().resolveService(intent, 0);
                                 intent.setAction("com.google.android.youtube.api.service.START");
                                 startActivity(intent);
@@ -561,6 +590,9 @@ public class MainActivity extends ActionBarActivity implements LocationListener,
                                 Intent intent = new Intent(MainActivity.this, VideoPlayerActivity.class);
                                 startActivity(intent);
                             }
+
+//                            Intent intent = new Intent(MainActivity.this, VideoPlayerActivity.class);
+//                            startActivity(intent);
 
                             dialog.dismiss();
 
@@ -581,7 +613,8 @@ public class MainActivity extends ActionBarActivity implements LocationListener,
 
     @Override
     protected void onDestroy() {
-        mWearSensorUtil.destroy();
+        if (mWearSensorUtil != null)
+            mWearSensorUtil.destroy();
         super.onDestroy();
     }
 
@@ -589,6 +622,7 @@ public class MainActivity extends ActionBarActivity implements LocationListener,
     public void onHeartRateChanged(float heartRate) {
         //do nothing in this implemented method
         Log.d(TAG, "heart rate:" + heartRate);
+        mHeartCount.setText("" + heartRate);
     }
 
     @Override
