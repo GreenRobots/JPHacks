@@ -1,12 +1,17 @@
 package im.ene.androooid.jphacks;
 
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.SystemClock;
 import android.support.v7.app.ActionBarActivity;
-import android.view.View;
 
 import com.nineoldandroids.animation.ObjectAnimator;
 
-import im.ene.androooid.timelytextview.TimelyView;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
+import im.ene.androooid.numberview.DigitalClockView;
+import im.ene.androooid.numberview.font.DFont;
 
 /**
  * Created by eneim on 12/17/14.
@@ -23,7 +28,15 @@ public class NextMainActivity extends ActionBarActivity {
 
     private int position = 1;
 
-    private TimelyView mTimelyStepCount;
+//    private TimelyView mTimelyStepCount;
+
+    public static final String EXTRA_MORPHING_DURATION = "morphing_duration";
+
+//    private DigitalClockView mDigitalClockView;
+//    private SystemClock mSystemClockManager;
+//    private SimpleDateFormat mSimpleDateFormat;
+
+    private Handler mHandler;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,23 +46,42 @@ public class NextMainActivity extends ActionBarActivity {
 
         getSupportActionBar().setElevation(1);
 
-        mTimelyStepCount = (TimelyView) findViewById(R.id.text_stepcount);
+//        mDigitalClockView = (DigitalClockView) findViewById(R.id.text_heartbeat);
+//        mDigitalClockView.setFont(new DFont(130, 10));
 
-        mTimelyStepCount.bringToFront();
-        (findViewById(R.id.image_avatar)).setOnClickListener(new View.OnClickListener() {
+        int morphingDuration = getIntent().getIntExtra(EXTRA_MORPHING_DURATION, DigitalClockView.DEFAULT_MORPHING_DURATION);
+//        mDigitalClockView.setMorphingDuration(morphingDuration);
+
+//        mSimpleDateFormat = new SimpleDateFormat("hh:mm:ss");
+
+        mHandler = new Handler();
+
+        mHandler.postDelayed(new Runnable() {
             @Override
-            public void onClick(View v) {
-                from = position ++ % 10;
+            public void run() {
+//                mDigitalClockView.setTime(mSimpleDateFormat.format(new Date()));
 
-                to = 6;
-
-                if(from != NO_VALUE && to != NO_VALUE) {
-                    objectAnimator = mTimelyStepCount.animate(from, to);
-                    objectAnimator.setDuration(DURATION);
-                } else {
-                    objectAnimator = null;
-                }
+                mHandler.post(this);
             }
-        });
+        }, 1000);
+
+//        mTimelyStepCount = (TimelyView) findViewById(R.id.text_stepcount);
+
+//        mTimelyStepCount.bringToFront();
+//        (findViewById(R.id.image_avatar)).setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                from = position ++ % 10;
+//
+//                to = 6;
+//
+//                if(from != NO_VALUE && to != NO_VALUE) {
+//                    objectAnimator = mTimelyStepCount.animate(from, to);
+//                    objectAnimator.setDuration(DURATION);
+//                } else {
+//                    objectAnimator = null;
+//                }
+//            }
+//        });
     }
 }

@@ -38,4 +38,5 @@ dependencies {
     compile 'pl.droidsonroids.gif:android-gif-drawable:1.1.+'
     compile project(':timelytextview')
     compile project(':magnet')
+    compile project(':numberview')
 }
